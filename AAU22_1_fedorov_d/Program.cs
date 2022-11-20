@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Security.Policy;
 
@@ -15,27 +16,38 @@ class FormalNeuronDemo {
         {
             Console.Write("Введите темп обучения (пример: 1 или 1,2 и т.п.) и нажмите клавишу Enter: " + Environment.NewLine);
             string temporaryValue = Console.ReadLine();
-            //double step;
             bool isDouble = double.TryParse(temporaryValue, out a);
-            if (isDouble) a = Convert.ToDouble(temporaryValue);
-            else
+            if (!isDouble)
             {
-                Console.Write("Вы ввели не число, значение подставлено автоматически (0.02)" + Environment.NewLine);
-                a = 0.02;
+                NumberFormatInfo numberFormatInfo = new NumberFormatInfo() { NumberDecimalSeparator = ".", };
+                try
+                {
+                    a = double.Parse(temporaryValue, numberFormatInfo);
+                }
+                catch (Exception)
+                {
+                    Console.Write("Вы ввели не число, значение подставлено автоматически (0.02)" + Environment.NewLine);
+                    a = 0.02;
+                }
             }
             Console.Write("Введите задержку (пример: 1 или 1,2 и т.п.) и нажмите клавишу Enter: " + Environment.NewLine);
             temporaryValue = Console.ReadLine();
-            //double delay;
             isDouble = double.TryParse(temporaryValue, out b);
-            if (isDouble) b = Convert.ToDouble(temporaryValue);
-            else
+            if (!isDouble)
             {
-                Console.Write("Вы ввели не число, значение подставлено автоматически (-0.4)" + Environment.NewLine);
-                b = -0.4;
+                NumberFormatInfo numberFormatInfo = new NumberFormatInfo() { NumberDecimalSeparator = ".", };
+                try
+                {
+                    b = double.Parse(temporaryValue, numberFormatInfo);
+                }
+                catch (Exception)
+                {
+                    Console.Write("Вы ввели не число, значение подставлено автоматически (-0.4)" + Environment.NewLine);
+                    b = -0.4;
+                }
             }
             Console.Write("Введите число повторений (прием: 1, 2, 3, 4 и т.п.) и нажмите клавишу Enter: " + Environment.NewLine);
             temporaryValue = Console.ReadLine();
-            //int reiterative;
             isDouble = int.TryParse(temporaryValue, out d);
             if (isDouble) d = Convert.ToInt32(temporaryValue);
             else
@@ -43,7 +55,6 @@ class FormalNeuronDemo {
                 Console.Write("Вы ввели не целое число, значение подставлено автоматически (10000)" + Environment.NewLine);
                 d = 10000;
             }
-
             if (d < 0)
             {
                 Console.Write("(" + d + ")" + " Исправлено на положительное число" + Environment.NewLine);
