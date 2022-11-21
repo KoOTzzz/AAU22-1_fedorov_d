@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Policy;
 
 class FormalNeuronDemo {
+
     class Neuron
     {
         double a;
@@ -94,7 +95,7 @@ class FormalNeuronDemo {
 
     }
     
-    static int[][] X = {
+    public static int[][] X = {
         new int [] {0, 0, 0, 0}, 
         new int [] {0, 0, 0, 1},
         new int [] {1, 1, 1, 0},
@@ -102,9 +103,9 @@ class FormalNeuronDemo {
         new int [] {1, 1, 1, 1}
     };
 
-    static int[] Y = {0, 1, 1, 0, 1};
+    public static int[] Y = {0, 1, 1, 0, 1};
 
-    static int[][] Test = {
+    public static int[][] Test = {
         new int [] {0, 0, 0, 0}, 
         new int [] {0, 0, 0, 1}, 
         new int [] {0, 1, 0, 1},
@@ -112,15 +113,29 @@ class FormalNeuronDemo {
         new int [] {1, 1, 1, 0}, 
         new int [] {1, 1, 1, 1}
     };
+    struct NeuroStruct
+    {
+        public int[][] X;
+        public int[][] Test;
+        public int[] Y;
+    }
+    
     public static int Main()
     {
-        Neuron neuron = new Neuron(X, Y); 
+
+        NeuroStruct myStruct;
+
+        myStruct.X = X;
+        myStruct.Y = Y;
+        myStruct.Test = Test;
+        
+        Neuron neuron = new Neuron(myStruct.X, myStruct.Y); 
         Console.WriteLine("[{0}] {1}", 
             string.Join(", ", neuron.w), 
             neuron.c
         );
 
-        foreach(int[] test in Test) { 
+        foreach(int[] test in myStruct.Test) { 
             Console.WriteLine("[{0}] {1} {2}", 
                 string.Join(", ", test), 
                 test[3],
